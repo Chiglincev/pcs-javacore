@@ -1,19 +1,41 @@
 package ru.netology.javacore;
 
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 public class TodosTests {
-    @Test
-    public void testJson() {
-        String input = "{ \"type\": \"ADD\", \"task\": \"task #" + "A" + "\" }";
-        Gson gson = new Gson();
+    static Todos todos = new Todos();
 
-        Todos todos = gson.fromJson(input, Todos.class);
-
-        Assertions.assertTrue(todos.type.equals("ADD"));
-        Assertions.assertTrue(todos.task.equals("task #A"));
+    @BeforeEach
+    public void beforeEach() {
+        todos.clear();
     }
 
+    @Test
+    public void addTaskTest() {
+        todos.addTask("А");
+
+        Assertions.assertTrue(Todos.getTodosList().contains("А"));
+    }
+
+    @Test
+    public void removeTaskTest() {
+        todos.addTask("А");
+
+        todos.removeTask("А");
+
+        Assertions.assertFalse(Todos.getTodosList().contains("А"));
+    }
+
+    @Test
+    public void getAllTask() {
+        todos.addTask("Я");
+        todos.addTask("В");
+        todos.addTask("А");
+        todos.addTask("М");
+
+        Assertions.assertTrue(todos.getAllTasks().equals("А В М Я "));
+    }
 }

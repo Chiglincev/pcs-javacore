@@ -13,14 +13,22 @@ public class Client {
         return chars.charAt(new Random().nextInt(chars.length()));
     }
 
-    public static void main(String[] args) throws IOException {
+    public static String pickRandomType() {
+        boolean seed = new Random().nextBoolean();
+        return seed == true ? "ADD" : "REMOVE";
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
         try (
             Socket socket = new Socket("localhost", 8989);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         ) {
-            out.println("{ \"type\": \"ADD\", \"task\": \"task #" + pickRandomChar() + "\" }");
-            System.out.println(in.readLine());
+            while (true) {
+                out.println("{ \"type\": \"" + pickRandomType() + "\", \"task\": \"task #" + pickRandomChar() + "\" }");
+                System.out.println(in.readLine());
+                Thread.sleep(500);
+            }
         }
     }
 }

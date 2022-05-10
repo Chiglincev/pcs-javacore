@@ -4,18 +4,40 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Todos {
-    public String type;
-    public String task;
+    private String type;
+    private String task;
 
-    public void addTask(TreeSet<String> todosList) {
-        todosList.add(task.toLowerCase());
+    private static TreeSet<String> todosList = new TreeSet<>();
+
+    public void addTask() {
+        todosList.add(task);
     }
 
-    public void removeTask(TreeSet<String> todosList) {
-        todosList.remove(task.toLowerCase());
+    public void addTask(String task) {
+        todosList.add(task);
     }
 
-    public String getAllTasks(TreeSet<String> todosList) {
+    public void removeTask() {
+        todosList.remove(task);
+    }
+
+    public void removeTask(String task) {
+        todosList.remove(task);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public static TreeSet<String> getTodosList() {
+        return todosList;
+    }
+
+    public String getAllTasks() {
         StringBuilder output = new StringBuilder();
         for (String toDos: todosList) {
             output.append(toDos).append(' ');
@@ -23,4 +45,9 @@ public class Todos {
         return output.toString();
     }
 
+    public void clear() {
+        type = null;
+        task = null;
+        todosList.clear();
+    }
 }
