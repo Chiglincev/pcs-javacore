@@ -1,26 +1,24 @@
 package ru.netology.javacore;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 
-public class TodosTests {
+public class TestTodos {
     static Todos todos = new Todos();
 
-    @BeforeEach
+    @org.junit.Before
     public void beforeEach() {
         todos.clear();
     }
 
-    @Test
+    @org.junit.Test
     public void addTaskTest() {
         todos.addTask("А");
 
         Assertions.assertTrue(Todos.getTodosList().contains("А"));
     }
 
-    @Test
+    @org.junit.Test
     public void removeTaskTest() {
         todos.addTask("А");
 
@@ -29,13 +27,13 @@ public class TodosTests {
         Assertions.assertFalse(Todos.getTodosList().contains("А"));
     }
 
-    @Test
+    @org.junit.Test
     public void getAllTask() {
         todos.addTask("Я");
         todos.addTask("В");
-        todos.addTask("А");
+        todos.addTask("Б");
         todos.addTask("М");
 
-        Assertions.assertTrue(todos.getAllTasks().equals("А В М Я "));
+        Assertions.assertTrue(todos.getAllTasks().equals("Б В М Я "));
     }
 }

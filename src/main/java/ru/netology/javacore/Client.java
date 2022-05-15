@@ -14,21 +14,18 @@ public class Client {
     }
 
     public static String pickRandomType() {
-        boolean seed = new Random().nextBoolean();
-        return seed == true ? "ADD" : "REMOVE";
+        boolean task = new Random().nextBoolean();
+        return task == true ? "ADD" : "REMOVE";
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        try (
+    public static void main(String[] args) throws IOException {
+            try (
             Socket socket = new Socket("localhost", 8989);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        ) {
-            while (true) {
+            ) {
                 out.println("{ \"type\": \"" + pickRandomType() + "\", \"task\": \"task #" + pickRandomChar() + "\" }");
                 System.out.println(in.readLine());
-                Thread.sleep(500);
-            }
         }
     }
 }

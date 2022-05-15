@@ -2,10 +2,9 @@ package ru.netology.javacore;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
-public class TodoServerTests {
-    @Test
+public class TestTodoServer {
+    @org.junit.Test
     public void testJson() {
         String input = "{ \"type\": \"ADD\", \"task\": \"task #" + "A" + "\" }";
         Gson gson = new Gson();
