@@ -18,7 +18,7 @@ public class TodoServer {
 
     public void start() throws IOException {
         Gson gson = new Gson();
-        String task;
+        String input;
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Starting server at " + port + "...");
@@ -30,16 +30,18 @@ public class TodoServer {
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
                 ) {
 
-                    task = in.readLine();
+                    input = in.readLine();
 
-                    todos = gson.fromJson(task, Todos.class);
-                    if (todos.getType().equals("ADD")) {
-                        todos.addTask();
+                    JsonTodos jsonTodos = gson.fromJson(input, JsonTodos.class);
+                    String task = jsonTodos.getTask();
+
+                    if (jsonTodos.getType().equals("ADD")) {
+                        new Todos(task).addTodosToList();
                     } else {
-                        todos.removeTask();
+                        Todos.removeTodosInList(task);
                     }
 
-                    out.println(todos.getAllTasks());
+                    out.println(Todos.getAllTasks());
                 }
             }
         }

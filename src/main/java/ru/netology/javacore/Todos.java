@@ -2,51 +2,63 @@ package ru.netology.javacore;
 
 import java.util.*;
 
-public class Todos {
-    private String type;
+public class Todos implements Comparable<Todos> {
     private String task;
 
-    private static TreeSet<String> todosList = new TreeSet<>();
+    private static TreeSet<Todos> todosList = new TreeSet<>();
 
-    public void addTask() {
-        todosList.add(task);
+    public Todos(String task) {
+        this.task = task;
+    }
+
+    public Todos() {
     }
 
     public void addTask(String task) {
-        todosList.add(task);
-    }
-
-    public void removeTask() {
-        todosList.remove(task);
-    }
-
-    public void removeTask(String task) {
-        todosList.remove(task);
-    }
-
-    public String getType() {
-        return type;
+        this.task = task;
     }
 
     public String getTask() {
         return task;
     }
 
-    public static TreeSet<String> getTodosList() {
+    public void addTodosToList() {
+        todosList.add(this);
+    }
+
+    public static void removeTodosInList(String task) {
+        Iterator<Todos> iterator = todosList.iterator();
+        while (iterator.hasNext()) {
+            Todos todos = iterator.next();
+            if (todos.getTask().equals(task)) {
+                iterator.remove();
+            }
+        }
+    }
+
+    public static TreeSet<Todos> getTodosList() {
         return todosList;
     }
 
-    public String getAllTasks() {
+    public static String getAllTasks() {
         StringBuilder output = new StringBuilder();
-        for (String toDos: todosList) {
-            output.append(toDos).append(' ');
+        for (Todos todos: todosList) {
+            output.append(todos.toString()).append(' ');
         }
         return output.toString();
     }
 
-    public void clear() {
-        type = null;
-        task = null;
+    public static void clear() {
         todosList.clear();
+    }
+
+    @Override
+    public String toString() {
+        return task;
+    }
+
+    @Override
+    public int compareTo(Todos o){
+        return task.compareTo(o.task);
     }
 }

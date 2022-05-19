@@ -9,7 +9,7 @@ public class TestTodoServer {
         String input = "{ \"type\": \"ADD\", \"task\": \"task #" + "A" + "\" }";
         Gson gson = new Gson();
 
-        Todos todos = gson.fromJson(input, Todos.class);
+        JsonTodos todos = gson.fromJson(input, JsonTodos.class);
 
         Assertions.assertTrue(todos.getType().equals("ADD"));
         Assertions.assertTrue(todos.getTask().equals("task #A"));
